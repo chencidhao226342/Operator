@@ -4,6 +4,8 @@
 #include <stdlib.h> 
 #include <iostream>
 #include <string.h>
+#include <math.h>
+
 using namespace std;
 #define MAX_BUF 1000
 double CharNumToDoule(char *num,int length)
@@ -11,18 +13,20 @@ double CharNumToDoule(char *num,int length)
 	//num = "15.4";
 	bool point = false; //判断是否有小数点
 	double ret = 0;
+	int tmp = 0;
 	for(int i = 0;i < length;i++)
 	{
 		if(num[i] == '.')
 		{
 			point = true;
+			tmp = i;
 		}
 		else
 		{
 			if(!point)
 				ret = ret * 10 + (int)(num[i] - 0x30);
 			else
-				ret = ret + 0.1 * (int)(num[i] - 0x30);
+				ret = ret + pow(0.1,i - tmp) * (int)(num[i] - 0x30);
 		}
 	}
 	return ret;
